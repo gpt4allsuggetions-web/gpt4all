@@ -18,12 +18,14 @@
   </header>
 
   <div class="container">
+    <!-- Login Card -->
     <div class="card" id="auth-card">
       <h2>Sign In to Continue</h2>
       <button onclick="googleLogin()">🔑 Sign in with Google</button>
       <button onclick="githubLogin()">🐙 Sign in with GitHub</button>
     </div>
 
+    <!-- User Card -->
     <div class="card" id="user-card" style="display: none;">
       <h2>Welcome, <span id="username"></span> 👋</h2>
       <p>Your tokens: <span id="token-count">0</span></p>
@@ -35,53 +37,75 @@
 
   <!-- Firebase SDKs -->
   <script type="module">
+    // Import Firebase SDKs
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
-      from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } 
-      from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { 
+      getAuth, 
+      GoogleAuthProvider, 
+      GithubAuthProvider, 
+      signInWithPopup, 
+      signOut, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      setDoc, 
+      getDoc 
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
 
+    // ✅ Your Firebase configuration
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyAyGQnpkw3_oa7v9hf2QPWTRlBVdgXA_80",
+      authDomain: "gpt4all-abf1f.firebaseapp.com",
+      databaseURL: "https://gpt4all-abf1f-default-rtdb.firebaseio.com",
+      projectId: "gpt4all-abf1f",
+      storageBucket: "gpt4all-abf1f.firebasestorage.app",
+      messagingSenderId: "753932826114",
+      appId: "1:753932826114:web:cefef570849b4b1397991b",
+      measurementId: "G-GQNP0MGG7B"
     };
 
+    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const analytics = getAnalytics(app);
 
+    // Providers
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
 
+    // DOM elements
     const authCard = document.getElementById("auth-card");
     const userCard = document.getElementById("user-card");
     const username = document.getElementById("username");
     const tokenCount = document.getElementById("token-count");
 
+    // Google Login
     async function googleLogin() {
       try {
         const result = await signInWithPopup(auth, googleProvider);
         await saveUser(result.user);
       } catch (error) {
-        alert("Error: " + error.message);
+        alert("Google Login Error: " + error.message);
       }
     }
     window.googleLogin = googleLogin;
 
+    // GitHub Login
     async function githubLogin() {
       try {
         const result = await signInWithPopup(auth, githubProvider);
         await saveUser(result.user);
       } catch (error) {
-        alert("Error: " + error.message);
+        alert("GitHub Login Error: " + error.message);
       }
     }
     window.githubLogin = githubLogin;
 
+    // Save user data in Firestore
     async function saveUser(user) {
       const ref = doc(db, "users", user.uid);
       const snap = await getDoc(ref);
@@ -94,6 +118,7 @@
       }
     }
 
+    // Auth state change listener
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         authCard.style.display = "none";
@@ -111,6 +136,7 @@
       }
     });
 
+    // Logout
     async function logout() {
       await signOut(auth);
     }
