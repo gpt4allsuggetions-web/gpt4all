@@ -1,0 +1,180 @@
+/* style.css - Dark Neon Theme for GPT4All with Animations */
+
+/* Global body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+  background-attachment: fixed;
+  color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  animation: fadeInBody 1.2s ease forwards;
+}
+
+@keyframes fadeInBody {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Header */
+header {
+  background: rgba(17,17,17,0.95);
+  color: #00ffcc;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+  letter-spacing: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  animation: slideDown 0.8s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Navigation */
+nav a {
+  color: #00ffcc;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+nav a:hover {
+  color: #00e6b8;
+  text-shadow: 0 0 8px #00ffcc;
+}
+
+/* Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 80vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Card */
+.card {
+  background: #1a1a1a;
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 1rem auto;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease-in-out;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+  border: 2px solid #00ffcc;
+  position: relative;
+}
+.card:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Neon border glow */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #00ffcc, #00e6b8, #00ffcc);
+  filter: blur(8px);
+  opacity: 0.5;
+  z-index: -1;
+  animation: pulseGlow 4s infinite linear;
+}
+
+@keyframes pulseGlow {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+/* Buttons */
+button {
+  background: #00ffcc;
+  color: #111;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+button:hover {
+  background: #00e6b8;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 0 15px #00ffcc;
+}
+
+/* Headings */
+h2 {
+  color: #00ffcc;
+  margin-bottom: 1rem;
+}
+
+/* Sections */
+section {
+  padding: 4rem 2rem;
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+}
+section h2 {
+  margin-bottom: 1rem;
+  color: #00ffcc;
+}
+
+/* Footer */
+footer {
+  background: #111;
+  color: #777;
+  padding: 1rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: fadeInFooter 1.5s ease;
+}
+
+@keyframes fadeInFooter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  header {
+    flex-direction: column;
+    font-size: 1.5rem;
+  }
+  nav a {
+    margin: 5px 10px;
+  }
+  .card {
+    padding: 1.5rem;
+    width: 95%;
+  }
+  section {
+    padding: 2rem 1rem;
+  }
+}

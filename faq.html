@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPT4All - FAQ</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .faq-item {
+    background: #111;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  .faq-answer {
+    display: none;
+    padding-top: 0.5rem;
+    color: #ccc;
+  }
+</style>
+</head>
+<body>
+<header>
+GPT4All
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact Us</a>
+</nav>
+</header>
+
+<div class="container">
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-item" onclick="toggleAnswer(this)">
+    <b>Q:</b> How do I get tokens?
+    <div class="faq-answer"><b>A:</b> You earn tokens by engaging with ads or reward mechanisms.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleAnswer(this)">
+    <b>Q:</b> Do I need an account?
+    <div class="faq-answer"><b>A:</b> Yes, sign in with Google or GitHub to track your tokens.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleAnswer(this)">
+    <b>Q:</b> Is GPT4All free?
+    <div class="faq-answer"><b>A:</b> Yes, GPT4All provides free access in exchange for watching ads.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleAnswer(this)">
+    <b>Q:</b> Can I use GPT4All on mobile?
+    <div class="faq-answer"><b>A:</b> Absolutely! The platform is fully responsive and works on mobile devices.</div>
+  </div>
+
+</div>
+
+<footer>&copy; 2025 GPT4All. All rights reserved.</footer>
+
+<script>
+function toggleAnswer(el) {
+  const answer = el.querySelector('.faq-answer');
+  answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

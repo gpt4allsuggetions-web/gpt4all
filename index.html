@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPT4All - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    GPT4All
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="card" id="auth-card">
+      <h2>Sign In to Continue</h2>
+      <button onclick="googleLogin()">🔑 Sign in with Google</button>
+      <button onclick="githubLogin()">🐙 Sign in with GitHub</button>
+    </div>
+
+    <div class="card" id="user-card" style="display: none;">
+      <h2>Welcome, <span id="username"></span> 👋</h2>
+      <p>Your tokens: <span id="token-count">0</span></p>
+      <button onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
+      from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } 
+      from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
+
+    const authCard = document.getElementById("auth-card");
+    const userCard = document.getElementById("user-card");
+    const username = document.getElementById("username");
+    const tokenCount = document.getElementById("token-count");
+
+    async function googleLogin() {
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        await saveUser(result.user);
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+    window.googleLogin = googleLogin;
+
+    async function githubLogin() {
+      try {
+        const result = await signInWithPopup(auth, githubProvider);
+        await saveUser(result.user);
+      } catch (error) {
+        alert("Error: " + error.message);
+      }
+    }
+    window.githubLogin = githubLogin;
+
+    async function saveUser(user) {
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          email: user.email,
+          displayName: user.displayName || "Anonymous",
+          tokens: 0
+        });
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        authCard.style.display = "none";
+        userCard.style.display = "block";
+        username.innerText = user.displayName || user.email;
+
+        const ref = doc(db, "users", user.uid);
+        const snap = await getDoc(ref);
+        if (snap.exists()) {
+          tokenCount.innerText = snap.data().tokens;
+        }
+      } else {
+        authCard.style.display = "block";
+        userCard.style.display = "none";
+      }
+    });
+
+    async function logout() {
+      await signOut(auth);
+    }
+    window.logout = logout;
+  </script>
+</body>
+</html>
