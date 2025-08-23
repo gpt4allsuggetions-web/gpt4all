@@ -1,6 +1,8 @@
-/* style.css - Dark Neon Theme for GPT4All with Animations */
+/* style.css - Neon Cyan Premium Theme for GPT4All */
 
-/* Global body */
+/* ===========================
+   Base Styles
+=========================== */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
@@ -10,21 +12,21 @@ body {
   padding: 0;
   animation: fadeInBody 1.2s ease forwards;
 }
-
 @keyframes fadeInBody {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-/* Header */
+/* ===========================
+   Header & Navigation
+=========================== */
 header {
-  background: rgba(17,17,17,0.95);
+  background: rgba(17, 17, 17, 0.95);
   color: #00ffcc;
-  padding: 1rem;
+  padding: 1rem 2rem;
   font-size: 2rem;
   font-weight: bold;
   box-shadow: 0 4px 12px rgba(0,0,0,0.8);
-  letter-spacing: 1px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -33,26 +35,99 @@ header {
   align-items: center;
   animation: slideDown 0.8s ease;
 }
-
 @keyframes slideDown {
   from { transform: translateY(-100%); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
-/* Navigation */
+nav {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease;
+}
+
 nav a {
   color: #00ffcc;
-  margin: 0 15px;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s, text-shadow 0.3s;
 }
 nav a:hover {
-  color: #00e6b8;
+  color: #00ffcc;
   text-shadow: 0 0 8px #00ffcc;
 }
 
-/* Container */
+/* ===========================
+   Hamburger Menu
+=========================== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 1100;
+
+  position: fixed; /* stays in top-right corner */
+  top: 1rem;
+  right: 1rem;
+}
+.hamburger span {
+  background: #00ffcc;
+  height: 3px;
+  width: 28px;
+  margin: 4px 0;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* ===========================
+   Slide-in menu for mobile
+=========================== */
+@media screen and (max-width: 768px) {
+  nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    background: rgba(17, 17, 17, 0.98);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem;
+    border-left: 2px solid #00ffcc;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.7);
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s ease;
+  }
+  nav.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* ===========================
+   Containers & Cards
+=========================== */
 .container {
   display: flex;
   justify-content: center;
@@ -62,8 +137,6 @@ nav a:hover {
   padding: 2rem;
   text-align: center;
 }
-
-/* Card */
 .card {
   background: #1a1a1a;
   border-radius: 16px;
@@ -72,109 +145,85 @@ nav a:hover {
   width: 90%;
   max-width: 500px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-  transition: transform 0.2s ease-in-out;
+  border: 2px solid #00ffcc;
+  position: relative;
+  z-index: 0;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUp 1s ease forwards;
-  border: 2px solid #00ffcc;
-  position: relative;
 }
-.card:hover {
-  transform: scale(1.02);
-}
-
 @keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-/* Neon border glow */
 .card::before {
   content: "";
   position: absolute;
   inset: -2px;
   border-radius: 18px;
-  background: linear-gradient(90deg, #00ffcc, #00e6b8, #00ffcc);
+  background: linear-gradient(90deg, #00ffcc, #00ffcc, #00ffcc);
   filter: blur(8px);
   opacity: 0.5;
   z-index: -1;
   animation: pulseGlow 4s infinite linear;
 }
-
 @keyframes pulseGlow {
   0% { opacity: 0.3; }
   50% { opacity: 0.7; }
   100% { opacity: 0.3; }
 }
 
-/* Buttons */
+/* ===========================
+   Buttons
+=========================== */
 button {
-  background: #00ffcc;
-  color: #111;
-  border: none;
+  background: transparent;
+  color: #00ffcc;
+  border: 2px solid #00ffcc;
   padding: 0.9rem 1.5rem;
   font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
   margin-top: 1rem;
-  display: block;
   width: 100%;
   font-weight: bold;
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
 }
 button:hover {
-  background: #00e6b8;
+  background: #00ffcc;
+  color: #111;
   transform: translateY(-3px) scale(1.02);
   box-shadow: 0 0 15px #00ffcc;
 }
 
-/* Headings */
-h2 {
-  color: #00ffcc;
-  margin-bottom: 1rem;
-}
-
-/* Sections */
-section {
-  padding: 4rem 2rem;
-  max-width: 800px;
-  margin: auto;
-  text-align: left;
-}
-section h2 {
-  margin-bottom: 1rem;
-  color: #00ffcc;
-}
-
-/* Footer */
+/* ===========================
+   Footer
+=========================== */
 footer {
   background: #111;
-  color: #777;
+  color: #00ffcc;
   padding: 1rem;
   margin-top: 3rem;
   font-size: 0.9rem;
   text-align: center;
-  animation: fadeInFooter 1.5s ease;
 }
 
-@keyframes fadeInFooter {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Responsive Design */
-@media screen and (max-width: 600px) {
+/* ===========================
+   Responsive
+=========================== */
+@media screen and (max-width: 480px) {
   header {
-    flex-direction: column;
-    font-size: 1.5rem;
-  }
-  nav a {
-    margin: 5px 10px;
+    font-size: 1.3rem;
+    padding: 0.8rem;
   }
   .card {
-    padding: 1.5rem;
-    width: 95%;
+    padding: 1rem;
   }
-  section {
-    padding: 2rem 1rem;
+  .card h2 {
+    font-size: 1.2rem;
+  }
+  button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
   }
 }

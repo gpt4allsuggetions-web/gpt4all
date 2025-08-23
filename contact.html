@@ -5,29 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GPT4All - Contact</title>
 <link rel="stylesheet" href="style.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111;
+    color: #0ff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; background: #000; position: relative;
+  }
+  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; }
+  nav { display: flex; gap: 20px; }
+  nav a { color: #0ff; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+  nav a:hover, nav a.active { color: #fff; text-decoration: underline; }
+
+  .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; cursor: pointer; }
+  .hamburger span { display: block; height: 3px; background: #0ff; border-radius: 2px; transition: 0.3s; }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+  .menu {
+    flex-direction: column; position: absolute; top: 60px; right: 20px;
+    background: #000; padding: 10px 15px; border-radius: 8px;
+    display: flex; opacity: 0; transform: translateY(-20px);
+    pointer-events: none; transition: all 0.3s ease-in-out;
+  }
+  .menu.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .menu a { margin: 10px 0; color: #0ff; font-weight: bold; text-decoration: none; }
+
+  .container { flex: 1; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 20px; }
+  .card { background: #222; padding: 20px; margin: 10px; border-radius: 10px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+
+  footer { text-align: center; padding: 10px; background: #000; color: #0ff; }
+
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+  }
+</style>
 </head>
 <body>
 <header>
+  <div class="logo">GPT4All</div>
 
-GPT4All
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="faq.html">FAQ</a>
-<a href="contact.html">Contact Us</a>
-</nav>
+  <!-- Desktop Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html" class="active">Contact Us</a>
+  </nav>
+
+  <!-- Hamburger Button -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="menu" id="menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html" class="active">Contact Us</a>
+  </div>
 </header>
+
 <div class="container">
-<div class="card">
-<h2>Contact Us</h2>
-<p>📧 Email: gpt4all.suggetions@gmail.com</p>
-<p>💬 Discord: <a href="#" style="color:#00ffcc;">Join our server</a></p>
+  <div class="card">
+    <h2>Contact Us</h2>
+    <p>📧 Email: gpt4all.suggetions@gmail.com</p>
+    <p>💬 Discord: <a href="#" style="color:#00ffcc;">Join our server</a></p>
+  </div>
 </div>
-</div>
+
 <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDsNdTB42xBkf9R4pK4a5cd7ewlEwG9MBs",
+    authDomain: "gym-soft-59c24.firebaseapp.com",
+    projectId: "gym-soft-59c24",
+    storageBucket: "gym-soft-59c24.appspot.com",
+    messagingSenderId: "868916743963",
+    appId: "1:868916743963:web:7ec3e193eb85333f7a2ce1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    menu.classList.toggle('show');
+  });
+
+  // Active page highlighting
+  const links = document.querySelectorAll("nav a, .menu a");
+  const currentPage = window.location.pathname.split("/").pop();
+  links.forEach(link => {
+    if(link.getAttribute("href") === currentPage) { link.classList.add("active"); }
+  });
+</script>
 </body>
 </html>
-```
-
-
-**style.css**
