@@ -9,79 +9,66 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-    color: #00ffcc;
+    background: #111;
+    color: #0ff;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
   }
-
   header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 15px 20px; background: rgba(17, 17, 17, 0.95); position: sticky; top: 0; z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    padding: 15px 20px; background: #000; position: relative;
   }
-  .logo { font-size: 2rem; font-weight: bold; color: #00ffcc; }
+  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; text-decoration: none; }
   nav { display: flex; gap: 20px; }
-  nav a { color: #00ffcc; text-decoration: none; font-weight: bold; transition: color 0.2s; }
-  nav a:hover, nav a.active { color: #00e6b8; text-decoration: underline; }
+  nav a { color: #0ff; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+  nav a:hover, nav a.active { color: #fff; text-decoration: underline; }
 
   .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 30px; height: 22px; cursor: pointer; }
-  .hamburger span { display: block; height: 3px; background: #00ffcc; border-radius: 2px; transition: 0.3s; }
+  .hamburger span { display: block; height: 3px; background: #0ff; border-radius: 2px; transition: 0.3s; }
   .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
   .hamburger.active span:nth-child(2) { opacity: 0; }
   .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
   .menu {
     flex-direction: column; position: absolute; top: 60px; right: 20px;
-    background: #111; padding: 10px 15px; border-radius: 8px;
+    background: #000; padding: 10px 15px; border-radius: 8px;
     display: flex; opacity: 0; transform: translateY(-20px);
     pointer-events: none; transition: all 0.3s ease-in-out;
   }
   .menu.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-  .menu a { margin: 10px 0; color: #00ffcc; font-weight: bold; text-decoration: none; }
+  .menu a { margin: 10px 0; color: #0ff; font-weight: bold; text-decoration: none; }
 
   main.container {
     flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; text-align: center;
   }
   .card {
-    background: #1a1a1a; border-radius: 16px; padding: 2rem; width: 100%; max-width: 500px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6); opacity: 0; animation: fadeIn 1s forwards;
+    background: #222; border-radius: 12px; padding: 2rem; width: 100%; max-width: 500px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
   }
-  .card h2 { margin-bottom: 1.5rem; color: #00ffcc; }
-  .card p { line-height: 1.6; color: #e0e0e0; }
+  .card h2 { margin-bottom: 1.5rem; color: #0ff; }
+  .card p { line-height: 1.6; color: #ccc; }
 
-  @keyframes fadeIn { to { opacity: 1; } }
-
-  footer { text-align: center; padding: 1rem; background: #111; color: #00ffcc; }
+  footer { text-align: center; padding: 1rem; background: #000; color: #0ff; }
 
   @media screen and (max-width: 768px) {
     nav { display: none; }
     .hamburger { display: flex; }
-    .menu { right: 20px; top: 60px; }
   }
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">GPT4All</div>
-
-  <!-- Desktop Navigation -->
+  <a href="index.html" class="logo">GPT4All</a>
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html" class="active">About</a>
     <a href="faq.html">FAQ</a>
     <a href="contact.html">Contact Us</a>
   </nav>
-
-  <!-- Hamburger Button -->
   <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </div>
-
-  <!-- Mobile Menu -->
   <div class="menu" id="menu">
     <a href="index.html">Home</a>
     <a href="about.html" class="active">About</a>
@@ -103,23 +90,7 @@
 
 <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDsNdTB42xBkf9R4pK4a5cd7ewlEwG9MBs",
-    authDomain: "gym-soft-59c24.firebaseapp.com",
-    projectId: "gym-soft-59c24",
-    storageBucket: "gym-soft-59c24.appspot.com",
-    messagingSenderId: "868916743963",
-    appId: "1:868916743963:web:7ec3e193eb85333f7a2ce1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // Hamburger toggle
+<script>
   const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('menu');
   hamburger.addEventListener('click', () => {
@@ -127,7 +98,6 @@
     menu.classList.toggle('show');
   });
 
-  // Active page highlighting
   const links = document.querySelectorAll("nav a, .menu a");
   const currentPage = window.location.pathname.split("/").pop();
   links.forEach(link => {

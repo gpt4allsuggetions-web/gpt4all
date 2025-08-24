@@ -19,7 +19,7 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 15px 20px; background: #000; position: relative;
   }
-  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; }
+  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; text-decoration: none; }
   nav { display: flex; gap: 20px; }
   nav a { color: #0ff; text-decoration: none; font-weight: bold; transition: color 0.3s; }
   nav a:hover, nav a.active { color: #fff; text-decoration: underline; }
@@ -41,6 +41,8 @@
 
   .container { flex: 1; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 20px; }
   .card { background: #222; padding: 20px; margin: 10px; border-radius: 10px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+  .card h2 { margin-bottom: 15px; }
+  .card p { margin: 8px 0; }
 
   footer { text-align: center; padding: 10px; background: #000; color: #0ff; }
 
@@ -52,7 +54,7 @@
 </head>
 <body>
 <header>
-  <div class="logo">GPT4All</div>
+  <a href="index.html" class="logo">GPT4All</a>
 
   <!-- Desktop Navigation -->
   <nav>
@@ -81,29 +83,14 @@
 <div class="container">
   <div class="card">
     <h2>Contact Us</h2>
-    <p>📧 Email: gpt4all.suggetions@gmail.com</p>
-    <p>💬 Discord: <a href="#" style="color:#00ffcc;">Join our server</a></p>
+    <p>📧 Email: <a href="mailto:gpt4all.suggetions@gmail.com" style="color:#0ff;">gpt4all.suggetions@gmail.com</a></p>
+    <p>💬 Discord: <a href="#" style="color:#0ff;">Join our server</a></p>
   </div>
 </div>
 
 <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDsNdTB42xBkf9R4pK4a5cd7ewlEwG9MBs",
-    authDomain: "gym-soft-59c24.firebaseapp.com",
-    projectId: "gym-soft-59c24",
-    storageBucket: "gym-soft-59c24.appspot.com",
-    messagingSenderId: "868916743963",
-    appId: "1:868916743963:web:7ec3e193eb85333f7a2ce1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
+<script>
   // Hamburger toggle
   const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('menu');
@@ -112,7 +99,7 @@
     menu.classList.toggle('show');
   });
 
-  // Active page highlighting
+  // Active link highlighting
   const links = document.querySelectorAll("nav a, .menu a");
   const currentPage = window.location.pathname.split("/").pop();
   links.forEach(link => {

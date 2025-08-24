@@ -78,11 +78,6 @@
       <button onclick="googleLogin()">🔑 Sign in with Google</button>
       <button onclick="githubLogin()">🐙 Sign in with GitHub</button>
     </div>
-    <div class="card" id="user-card" style="display: none;">
-      <h2>Welcome, <span id="username"></span> 👋</h2>
-      <p>Your tokens: <span id="token-count">0</span></p>
-      <button onclick="logout()">🚪 Logout</button>
-    </div>
   </div>
 
   <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
@@ -92,7 +87,7 @@
     import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signOut, onAuthStateChanged } 
       from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
 
-    // ✅ Fixed Firebase config
+    // ✅ Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyAyGQnpkw3_oa7v9hf2QPWTRlBVdgXA_80",
       authDomain: "gpt4all-abf1f.firebaseapp.com",
@@ -106,11 +101,6 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
-    const authCard = document.getElementById("auth-card");
-    const userCard = document.getElementById("user-card");
-    const username = document.getElementById("username");
-    const tokenCount = document.getElementById("token-count");
 
     window.googleLogin = async () => {
       const provider = new GoogleAuthProvider();
@@ -138,15 +128,10 @@
       }
     };
 
+    // ✅ Redirect to main.html after login
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        authCard.style.display = "none";
-        userCard.style.display = "block";
-        username.textContent = user.displayName || user.email;
-        tokenCount.textContent = 100; // later hook into Firestore 
-      } else {
-        authCard.style.display = "block";
-        userCard.style.display = "none";
+        window.location.href = "main.html";
       }
     });
 

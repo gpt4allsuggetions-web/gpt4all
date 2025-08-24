@@ -19,7 +19,7 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 15px 20px; background: #000; position: relative;
   }
-  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; }
+  .logo { font-size: 1.5rem; font-weight: bold; color: #0ff; text-decoration: none; }
   nav { display: flex; gap: 20px; }
   nav a { color: #0ff; text-decoration: none; font-weight: bold; transition: color 0.3s; }
   nav a:hover, nav a.active { color: #fff; text-decoration: underline; }
@@ -43,16 +43,25 @@
   h2 { margin-bottom: 20px; }
   
   .faq-item {
-    background: #111;
+    background: #222;
     border-radius: 12px;
     padding: 1rem;
     margin-bottom: 1rem;
     cursor: pointer;
+    transition: background 0.3s;
+  }
+  .faq-item:hover {
+    background: #2a2a2a;
   }
   .faq-answer {
-    display: none;
-    padding-top: 0.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding-top 0.3s ease;
     color: #ccc;
+  }
+  .faq-answer.open {
+    max-height: 200px; /* enough to fit text */
+    padding-top: 0.5rem;
   }
 
   footer { text-align: center; padding: 10px; background: #000; color: #0ff; }
@@ -65,24 +74,16 @@
 </head>
 <body>
 <header>
-  <div class="logo">GPT4All</div>
-
-  <!-- Desktop Navigation -->
+  <a href="index.html" class="logo">GPT4All</a>
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="faq.html" class="active">FAQ</a>
     <a href="contact.html">Contact Us</a>
   </nav>
-
-  <!-- Hamburger Button -->
   <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </div>
-
-  <!-- Mobile Menu -->
   <div class="menu" id="menu">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -117,24 +118,8 @@
 
 <footer>&copy; 2025 GPT4All. All rights reserved.</footer>
 
-<script type="module">
-  // Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-  import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider, signOut, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDsNdTB42xBkf9R4pK4a5cd7ewlEwG9MBs",
-    authDomain: "gym-soft-59c24.firebaseapp.com",
-    projectId: "gym-soft-59c24",
-    storageBucket: "gym-soft-59c24.appspot.com",
-    messagingSenderId: "868916743963",
-    appId: "1:868916743963:web:7ec3e193eb85333f7a2ce1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
+<script>
+  // Hamburger toggle
   const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('menu');
   hamburger.addEventListener('click', () => {
@@ -142,17 +127,30 @@
     menu.classList.toggle('show');
   });
 
+  // Active link highlight
   const links = document.querySelectorAll("nav a, .menu a");
   const currentPage = window.location.pathname.split("/").pop();
   links.forEach(link => {
     if(link.getAttribute("href") === currentPage) { link.classList.add("active"); }
   });
 
-  // FAQ toggle
-  function toggleAnswer(el) {
+  // Sleek expanding FAQ toggle
+  window.toggleAnswer = function(el) {
     const answer = el.querySelector('.faq-answer');
-    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-  }
+    const isOpen = answer.classList.contains("open");
+
+    // close any other open answers (optional: for accordion effect)
+    document.querySelectorAll(".faq-answer.open").forEach(a => {
+      if (a !== answer) a.classList.remove("open");
+    });
+
+    // toggle clicked one
+    if (isOpen) {
+      answer.classList.remove("open");
+    } else {
+      answer.classList.add("open");
+    }
+  };
 </script>
 </body>
 </html>
