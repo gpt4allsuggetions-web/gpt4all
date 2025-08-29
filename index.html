@@ -123,15 +123,25 @@
     window.logout = async () => {
       try {
         await signOut(auth);
+        localStorage.clear(); // clear everything on logout
+        window.location.href = "index.html";
       } catch (err) {
         alert("Logout failed: " + err.message);
       }
     };
 
-    // ✅ Redirect to main.html after login
+    // ✅ Redirect to main.html after login and save user info
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        // Save user info in localStorage
+        localStorage.setItem("userId", user.uid);
+        localStorage.setItem("userName", user.displayName || "");
+        localStorage.setItem("userEmail", user.email || "");
+
+        // Redirect
         window.location.href = "main.html";
+      } else {
+        localStorage.clear();
       }
     });
 
